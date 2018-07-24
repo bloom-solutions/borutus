@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    borutus (0.13)
+    borutus (0.1.0)
       jquery-rails (>= 3.0)
       jquery-ui-rails (>= 4.2.2)
       kaminari (~> 1.0)
