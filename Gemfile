@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in plutus.gemspec
+# Specify your gem's dependencies in borutus.gemspec
 gemspec
 
 group :development, :test do

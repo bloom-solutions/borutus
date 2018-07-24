@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe EntriesController do
-    routes { Plutus::Engine.routes }
+    routes { Borutus::Engine.routes }
 
     def mock_entry(stubs={})
       @mock_entry ||= FactoryGirl.create(:entry_with_credit_and_debit)

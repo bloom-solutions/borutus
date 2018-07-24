@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe Equity do
-    it_behaves_like 'a Plutus::Account subtype', kind: :equity, normal_balance: :credit
+    it_behaves_like 'a Borutus::Account subtype', kind: :equity, normal_balance: :credit
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe Account do
     let(:account) { FactoryGirl.build(:account) }
     subject { account }

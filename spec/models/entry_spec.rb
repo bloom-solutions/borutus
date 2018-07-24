@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe Entry do
     let(:entry) { FactoryGirl.build(:entry) }
     subject { entry }
@@ -92,7 +92,7 @@ module Plutus
       let!(:sales_revenue) { FactoryGirl.create(:revenue, name: "Sales Revenue") }
       let!(:sales_tax_payable) { FactoryGirl.create(:liability, name: "Sales Tax Payable") }
 
-      shared_examples_for 'a built-from-hash Plutus::Entry' do
+      shared_examples_for 'a built-from-hash Borutus::Entry' do
         its(:credit_amounts) { is_expected.not_to be_empty }
         its(:debit_amounts) { is_expected.not_to be_empty }
         it { is_expected.to be_valid }
@@ -127,7 +127,7 @@ module Plutus
                 ]
             }
           }
-          include_examples 'a built-from-hash Plutus::Entry'
+          include_examples 'a built-from-hash Borutus::Entry'
         end
 
         context "when given a credit/debits hash with :account_name => String" do
@@ -142,7 +142,7 @@ module Plutus
                 ]
             }
           }
-          include_examples 'a built-from-hash Plutus::Entry'
+          include_examples 'a built-from-hash Borutus::Entry'
         end
       end
 

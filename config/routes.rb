@@ -1,4 +1,4 @@
-Plutus::Engine.routes.draw do
+Borutus::Engine.routes.draw do
   root :to => 'reports#balance_sheet'
 
   get 'reports/balance_sheet' => 'reports#balance_sheet'
