@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    plutus (0.13)
+    borutus (0.13)
       jquery-rails (>= 3.0)
       jquery-ui-rails (>= 4.2.2)
       kaminari (~> 1.0)
@@ -182,7 +182,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
-  plutus!
+  borutus!
   puma (~> 3.0)
   rails (~> 5.1.2)
   sass-rails (~> 5.0)

@@ -12,27 +12,27 @@
 
 ActiveRecord::Schema.define(version: 20180709082453) do
 
-  create_table "plutus_accounts", force: :cascade do |t|
+  create_table "borutus_accounts", force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.boolean "contra"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "tenant_id"
-    t.index ["name", "type"], name: "index_plutus_accounts_on_name_and_type"
+    t.index ["name", "type"], name: "index_borutus_accounts_on_name_and_type"
   end
 
-  create_table "plutus_amounts", force: :cascade do |t|
+  create_table "borutus_amounts", force: :cascade do |t|
     t.string "type"
     t.integer "account_id"
     t.integer "entry_id"
     t.decimal "amount", precision: 20, scale: 10
-    t.index ["account_id", "entry_id"], name: "index_plutus_amounts_on_account_id_and_entry_id"
-    t.index ["entry_id", "account_id"], name: "index_plutus_amounts_on_entry_id_and_account_id"
-    t.index ["type"], name: "index_plutus_amounts_on_type"
+    t.index ["account_id", "entry_id"], name: "index_borutus_amounts_on_account_id_and_entry_id"
+    t.index ["entry_id", "account_id"], name: "index_borutus_amounts_on_entry_id_and_account_id"
+    t.index ["type"], name: "index_borutus_amounts_on_type"
   end
 
-  create_table "plutus_entries", force: :cascade do |t|
+  create_table "borutus_entries", force: :cascade do |t|
     t.string "description"
     t.date "date"
     t.integer "commercial_document_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20180709082453) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["commercial_document_id", "commercial_document_type"], name: "index_entries_on_commercial_doc"
-    t.index ["date"], name: "index_plutus_entries_on_date"
+    t.index ["date"], name: "index_borutus_entries_on_date"
   end
 
 end

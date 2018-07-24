@@ -1,0 +1,13 @@
+Description:
+    Generator for Borutus Plugin
+
+Installation:
+    rails g borutus:install:migrations
+
+    This will:
+        Create a migration in the application for the "Account",
+        "Entry" and "Amount" tables.
+
+    Once generated, simply run:
+        rake db:migrate
+

@@ -1,27 +1,27 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe Account do
     describe 'tenancy support' do
       before(:each) do
         ActiveSupportHelpers.clear_model('Account')
         ActiveSupportHelpers.clear_model('Asset')
 
-        Plutus.enable_tenancy = true
-        Plutus.tenant_class = 'Plutus::Entry'
+        Borutus.enable_tenancy = true
+        Borutus.tenant_class = 'Borutus::Entry'
 
         FactoryGirlHelpers.reload()
-        Plutus::Asset.new
+        Borutus::Asset.new
       end
 
       after(:each) do
-        if Plutus.const_defined?(:Asset)
+        if Borutus.const_defined?(:Asset)
           ActiveSupportHelpers.clear_model('Account')
           ActiveSupportHelpers.clear_model('Asset')
         end
 
-        Plutus.enable_tenancy = false
-        Plutus.tenant_class = nil
+        Borutus.enable_tenancy = false
+        Borutus.tenant_class = nil
 
         FactoryGirlHelpers.reload()
       end

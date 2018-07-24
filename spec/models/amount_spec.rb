@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe Amount do
 
     describe "attributes" do

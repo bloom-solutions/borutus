@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-module Plutus
+module Borutus
   describe AccountsController do
-    routes { Plutus::Engine.routes }
+    routes { Borutus::Engine.routes }
 
     def mock_account(stubs={})
       @mock_account ||= FactoryGirl.create(:asset)

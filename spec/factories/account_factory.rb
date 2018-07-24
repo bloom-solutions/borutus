@@ -1,30 +1,30 @@
 FactoryGirl.define do
-  factory :account, :class => Plutus::Account do |account|
+  factory :account, :class => Borutus::Account do |account|
     account.name
     account.contra false
   end
 
-  factory :asset, :class => Plutus::Asset do |account|
+  factory :asset, :class => Borutus::Asset do |account|
     account.name
     account.contra false
   end
 
-  factory :equity, :class => Plutus::Equity do |account|
+  factory :equity, :class => Borutus::Equity do |account|
     account.name
     account.contra false
   end
 
-  factory :expense, :class => Plutus::Expense do |account|
+  factory :expense, :class => Borutus::Expense do |account|
     account.name
     account.contra false
   end
 
-  factory :liability, :class => Plutus::Liability do |account|
+  factory :liability, :class => Borutus::Liability do |account|
     account.name
     account.contra false
   end
 
-  factory :revenue, :class => Plutus::Revenue do |account|
+  factory :revenue, :class => Borutus::Revenue do |account|
     account.name
     account.contra false
   end
