@@ -1,16 +1,17 @@
 Borutus
 =================
-[![Build Status](https://travis-ci.org/bloom-solutions/borutus.svg?branch=master)](https://travis-ci.org/bloom-solutions/borutus) [![Coverage Status](https://coveralls.io/repos/github/bloom-solutions/borutus/badge.svg?branch=master)](https://coveralls.io/github/bloom-solutions/borutus?branch=master)
+[![Build Status](https://travis-ci.org/bloom-solutions/borutus.svg?branch=master)](https://travis-ci.org/bloom-solutions/borutus)
+
+Borutus is based on the `bloom_changes` branch of [bloom-solutions/plutus](https://github.com/bloom-solutions/plutus), which is a fork of
+[mbulat/plutus](https://github.com/mbulat/plutus).
 
 The Borutus plugin is a Ruby on Rails Engine which provides a double entry accounting system for your application.
 
 Compatibility
 =============
 
-* Ruby versions: MRI 2.2.2+ (should work with earlier versions if using Rails 4)
-* Rails versions: ~> 5.0, ~> 4.0
-
-For earlier versions, and upgrading, please see the section titled [Previous Versions](https://github.com/bloom-solutions/borutus#previous-versions)
+* Ruby versions: MRI 2.2.2+
+* Rails versions: ~> 5.0
 
 Installation
 ============
@@ -289,7 +290,9 @@ Borutus.config do |config|
   config.tenant_class = 'Tenant'
 end
 ```
+
 *NOTE: When building entries, be sure to specify the account directly, rather than use the `account_name` feature. Otherwise you'll probably end up with the wrong account.*
+
 
 ```ruby
 debit_account = Borutus::Account.where(:name => "Cash", :tenant => my_tenant).last
@@ -320,32 +323,6 @@ mount Borutus::Engine => "/borutus", :as => "borutus"
 
 *Future versions of borutus will allow for customization of authentication.*
 
-
-Previous Versions
-=================
-
-For the rails 3 version, you can go here:
-
-[https://github.com/bloom-solutions/borutus/tree/rails3](https://github.com/bloom-solutions/borutus/tree/rails3)
-
-For the rails 2 version, you can go here:
-
-[https://github.com/bloom-solutions/borutus/tree/rails2](https://github.com/bloom-solutions/borutus/tree/rails2)
-
-* Gems in RubyGems.org >= 0.5.0 support Rails 3
-* Gems in RubyGems.org >= 0.8.0 support Rails 4
-* Gems in RubyGems.org >= 0.9.0 support Rails ~> 4.1
-* Gems in RubyGems.org >= 0.13.0 support Rails ~> 5.0
-
-Upgrading from older versions
------------------------------
-
-As Borutus is still in alpha, there have been some breaking changes with previous versions.
-
-If you are upgrading, please check the Wiki for guides on how to properly upgrade borutus to deal with the changes:
-
-[Upgrade Notes](https://github.com/bloom-solutions/borutus/wiki/Updrade-Notes)
-
 Testing
 =======
 
@@ -360,16 +337,6 @@ Many thanks to all our contributors! Check them all at:
 
 https://github.com/bloom-solutions/borutus/graphs/contributors
 
-Community and where to get help
-===============================
-
-* Join the [mailing list](https://groups.google.com/d/forum/borutus-gem) (Google Group)
-
-ToDo
-====
-
-* Better views, including paging
-* Reference for common accounting entries
 
 Reference
 =========
@@ -378,6 +345,3 @@ For a complete reference on Accounting principles, we recommend the following te
 
 [http://amzn.com/0324662963](http://amzn.com/0324662963)
 
-* * *
-
-Copyright (c) 2010-2016 Michael Bulat
