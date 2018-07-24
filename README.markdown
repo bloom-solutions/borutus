@@ -17,8 +17,8 @@ Installation
 ============
 
 - Add the gem to your Gemfile `gem "borutus"`
-- generate migration files `rake borutus:install:migrations`
-- run migrations `rake db:migrate`
+- Generate migration files `rake borutus:install:migrations`
+- Run migrations `rake db:migrate`
 
 Overview
 ========
