@@ -1,4 +1,5 @@
 require 'coveralls'
+require 'pry'
 Coveralls.wear!
 
 ENV["RAILS_ENV"] ||= 'test'
