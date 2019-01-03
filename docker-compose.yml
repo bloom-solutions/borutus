@@ -1,0 +1,10 @@
+version: '3'
+services:
+  pg:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg:/var/lib/postgresql/data
+volumes:
+  pg:

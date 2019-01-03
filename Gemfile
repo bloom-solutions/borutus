@@ -14,4 +14,5 @@ group :development, :test do
   gem "rspec-its"
   gem "rspec-rails", "~> 3"
   gem "sqlite3", :platform => [:ruby, :mswin, :mingw]
+  gem "pg", "~> 1.1"
 end
