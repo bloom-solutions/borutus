@@ -14,6 +14,70 @@ module Borutus
       end
     end
 
+    describe ".entries.with_running_balance" do
+      let(:mock_document) { FactoryGirl.create(:asset) }
+      let!(:accounts_receivable) do
+        FactoryGirl.create(:asset, name: "Accounts Receivable")
+      end
+      let!(:sales_revenue) do
+        FactoryGirl.create(:revenue, name: "Sales Revenue")
+      end
+      let!(:sales_tax_payable) do
+        FactoryGirl.create(:liability, name: "Sales Tax Payable")
+      end
+      let!(:entry_1) do
+        Borutus::Entry.new({
+          description: "Sold some widgets",
+          commercial_document: mock_document,
+          debits: [{account: accounts_receivable, amount: 50}],
+          credits: [
+            {account: sales_revenue, amount: 45},
+            {account: sales_tax_payable, amount: 5}
+          ]
+        })
+      end
+      let!(:entry_2) do
+        Borutus::Entry.new({
+          description: "Cancel Accounts receivable some widgets again",
+          commercial_document: mock_document,
+          debits: [
+            {account: accounts_receivable, amount: -30},
+          ],
+          credits: [
+            {account: sales_revenue, amount: -25},
+            {account: sales_tax_payable, amount: -5},
+          ]
+        })
+      end
+      let!(:entry_3) do
+        Borutus::Entry.new({
+          description: "Cancel Accounts receivable",
+          commercial_document: mock_document,
+          debits: [{account: sales_tax_payable, amount: 15}],
+          credits: [{account: accounts_receivable, amount: 15}],
+        })
+      end
+
+      it "returns entries for only the account with a balance column" do
+        entry_1.save
+        entry_2.save
+        entry_3.save
+
+        receivable_entries = accounts_receivable.entries.with_running_balance
+        expect(receivable_entries.to_a.count).to eq 3
+        expect(receivable_entries.first.balance).to eq 50 # inital 50
+        expect(receivable_entries.second.balance).to eq 20 # deduct 30 due to entry_2
+        expect(receivable_entries.last.balance).to eq 5 # deduct 5 due to entry_3
+
+        payable_entries = sales_tax_payable.entries.with_running_balance
+          .order(created_at: :asc)
+        expect(payable_entries.to_a.count).to eq 3
+        expect(payable_entries.first.balance).to eq 5
+        expect(payable_entries.second.balance).to eq 0 # deduct 5 due to entry_2
+        expect(payable_entries.last.balance).to eq -15 # deduct 15 due to entry_3
+      end
+    end
+
     describe "when using a child type" do
       let(:account) { FactoryGirl.create(:account, type: "Finance::Asset") }
       it { is_expected.to be_valid }
