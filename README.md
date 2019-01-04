@@ -11,6 +11,7 @@ Compatibility
 =============
 
 * Rails versions: ~> 5.0
+* PostgreSQL: > 9.4
 
 Installation
 ============
@@ -325,7 +326,9 @@ mount Borutus::Engine => "/borutus", :as => "borutus"
 Testing
 =======
 
-[Rspec](http://rspec.info/) tests are provided. Run `bundle install` then `rake`.
+Run `docker-compose up pg`, this will create a local postgresql database. Then create a DB name `borutus_fixture_test`, you can do this via `createdb --username=postgres --host=localhost --port=5432 --template=template0 borutus_fixture_test`
+
+[Rspec](http://rspec.info/) tests are provided. Run `bundle install` then `bundle exec rspec spec`.
 
 Contributing and Contributors
 =============================
