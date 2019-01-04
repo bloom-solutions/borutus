@@ -53,25 +53,21 @@ module Borutus
           %{ SUM("borutus_amounts".amount) AS amount }
         ).group(:entry_id, :id)
 
-        select_statement = if account.normal_credit_balance
-                             %{ COALESCE("credit_table"."amount", 0) - coalesce("debit_table"."amount", 0) }
-                           else
-                             %{ COALESCE("debit_table"."amount", 0) - coalesce("credit_table"."amount", 0) }
-                           end
+        sum_statement = if account.normal_credit_balance
+                          %{ COALESCE("credit_table"."amount", 0) - COALESCE("debit_table"."amount", 0) }
+                        else
+                          %{ COALESCE("debit_table"."amount", 0) - COALESCE("credit_table"."amount", 0) }
+                        end
 
         joins(%{
           LEFT OUTER JOIN (#{credit_table.to_sql}) AS "credit_table" ON "credit_table".entry_id = "borutus_entries".id
           LEFT OUTER JOIN (#{debit_table.to_sql}) AS "debit_table" ON "debit_table".entry_id = "borutus_entries".id
         }).select(%{
           "borutus_entries".*,
-          SUM(#{select_statement}) OVER(ORDER BY "borutus_entries"."created_at") AS balance
-        }).group(
-          :id,
-          %{
-            "debit_table".amount,
-            "credit_table".amount
-          }
-        ).order(created_at: :asc)
+          SUM(#{sum_statement}) OVER(ORDER BY "borutus_entries"."created_at") AS balance,
+          #{sum_statement} AS change_amount
+        }).group(:id, %{ "debit_table".amount, "credit_table".amount })
+          .order(created_at: :asc)
       end
     end
     has_many :credit_entries, :through => :credit_amounts, :source => :entry, :class_name => 'Borutus::Entry'
