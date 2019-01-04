@@ -1,5 +1,10 @@
 require 'bundler/setup'
 
+APP_RAKEFILE = File.expand_path("./fixture_rails_root/Rakefile")
+load 'rails/tasks/engine.rake'
+load 'rails/tasks/statistics.rake'
+
+require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
 desc "run specs"

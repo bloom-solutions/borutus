@@ -1,14 +1,13 @@
 language: ruby
-dist: xenial
-before_install:
-  - gem update --system
 cache: bundler
 sudo: false
+addons:
+  postgresql: '9.6'
 rvm:
   - 2.5.1
-script: bundle exec rspec
-addons:
-  apt:
-    update: true
-    packages:
-      - sqlite3
+before_install:
+  - gem update --system
+before_script:
+  - bundle exec rake app:db:test:prepare RAILS_ENV=test
+script:
+  - bundle exec rspec spec
