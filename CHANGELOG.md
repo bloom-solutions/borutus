@@ -1,9 +1,20 @@
-# Not Released
-## Fixed
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Added
+- Add `account.entries.with_running_balance` association proxy method
+- Add `pry-byebug` in `Gemfile` for local development
+
+## [0.1.0]
+### Fixed
 - Fix loading of jquery-ui files (Fixes https://github.com/mbulat/borutus/issues/58)
 
-## Added
+### Added
 - Add `Account#amounts` and `Account#entries` to get all amounts and entries, respectively
 
-## Changed
+### Changed
 - How migrations are done, which may be a breaking change from older versions of Borutus. When upgrading to this version, run `rake borutus:install:migrations`, and ensure that the files that are generated are of migrations you only need. It should not generate new versions if you've installed the latest version before this.
