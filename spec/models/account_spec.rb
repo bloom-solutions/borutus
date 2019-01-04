@@ -58,7 +58,7 @@ module Borutus
         })
       end
 
-      it "returns entries for only the account with a balance column" do
+      it "returns entries for only the account with a balance and change_amount columns" do
         entry_1.save
         entry_2.save
         entry_3.save
@@ -66,15 +66,21 @@ module Borutus
         receivable_entries = accounts_receivable.entries.with_running_balance
         expect(receivable_entries.to_a.count).to eq 3
         expect(receivable_entries.first.balance).to eq 50 # inital 50
+        expect(receivable_entries.first.change_amount).to eq 50 # inital 50
         expect(receivable_entries.second.balance).to eq 20 # deduct 30 due to entry_2
+        expect(receivable_entries.second.change_amount).to eq -30 # deduct 30 due to entry_2
         expect(receivable_entries.last.balance).to eq 5 # deduct 5 due to entry_3
+        expect(receivable_entries.last.change_amount).to eq -15 # deduct 5 due to entry_3
 
         payable_entries = sales_tax_payable.entries.with_running_balance
           .order(created_at: :asc)
         expect(payable_entries.to_a.count).to eq 3
         expect(payable_entries.first.balance).to eq 5
+        expect(payable_entries.first.change_amount).to eq 5
         expect(payable_entries.second.balance).to eq 0 # deduct 5 due to entry_2
+        expect(payable_entries.second.change_amount).to eq -5
         expect(payable_entries.last.balance).to eq -15 # deduct 15 due to entry_3
+        expect(payable_entries.last.change_amount).to eq -15
       end
     end
 
