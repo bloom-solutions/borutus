@@ -181,7 +181,7 @@ module Borutus
       if self.new.class == Borutus::Account
         raise(NoMethodError, "undefined method 'balance'")
       else
-        accounts_balance = BigDecimal.new('0')
+        accounts_balance = BigDecimal('0')
         accounts = self.all
         accounts.each do |account|
           if account.contra
