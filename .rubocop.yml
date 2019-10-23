@@ -1,0 +1,2 @@
+inherit_gem:
+  bloom_rubocop: default.yml

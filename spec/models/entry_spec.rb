@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 module Borutus
   describe Entry do
@@ -18,9 +18,9 @@ module Borutus
     end
 
     context "with a debit" do
-      before {
+      before do
         entry.debit_amounts << FactoryGirl.build(:debit_amount, entry: entry)
-      }
+      end
       it { is_expected.not_to be_valid }
 
       context "with an invalid credit" do
@@ -32,15 +32,15 @@ module Borutus
     end
 
     context "with a credit" do
-      before {
+      before do
         entry.credit_amounts << FactoryGirl.build(:credit_amount, entry: entry)
-      }
+      end
       it { is_expected.not_to be_valid }
 
       context "with an invalid debit" do
-        before {
+        before do
           entry.debit_amounts << FactoryGirl.build(:debit_amount, entry: entry, amount: nil)
-        }
+        end
         it { is_expected.not_to be_valid }
       end
     end
@@ -55,27 +55,27 @@ module Borutus
     end
 
     it "should require the debit and credit amounts to cancel" do
-      entry.credit_amounts << FactoryGirl.build(:credit_amount, :amount => 100, :entry => entry)
-      entry.debit_amounts << FactoryGirl.build(:debit_amount, :amount => 200, :entry => entry)
+      entry.credit_amounts << FactoryGirl.build(:credit_amount, amount: 100, entry: entry)
+      entry.debit_amounts << FactoryGirl.build(:debit_amount, amount: 200, entry: entry)
       expect(entry).not_to be_valid
-      expect(entry.errors['base']).to eq(["The credit and debit amounts are not equal"])
+      expect(entry.errors["base"]).to eq(["The credit and debit amounts are not equal"])
     end
 
     it "should require the debit and credit amounts to cancel even with fractions" do
       entry = FactoryGirl.build(:entry)
-      entry.credit_amounts << FactoryGirl.build(:credit_amount, :amount => 100.1, :entry => entry)
-      entry.debit_amounts << FactoryGirl.build(:debit_amount, :amount => 100.2, :entry => entry)
+      entry.credit_amounts << FactoryGirl.build(:credit_amount, amount: 100.1, entry: entry)
+      entry.debit_amounts << FactoryGirl.build(:debit_amount, amount: 100.2, entry: entry)
       expect(entry).not_to be_valid
-      expect(entry.errors['base']).to eq(["The credit and debit amounts are not equal"])
+      expect(entry.errors["base"]).to eq(["The credit and debit amounts are not equal"])
     end
 
     it "should ignore debit and credit amounts marked for destruction to cancel" do
-      entry.credit_amounts << FactoryGirl.build(:credit_amount, :amount => 100, :entry => entry)
-      debit_amount = FactoryGirl.build(:debit_amount, :amount => 100, :entry => entry)
+      entry.credit_amounts << FactoryGirl.build(:credit_amount, amount: 100, entry: entry)
+      debit_amount = FactoryGirl.build(:debit_amount, amount: 100, entry: entry)
       debit_amount.mark_for_destruction
       entry.debit_amounts << debit_amount
       expect(entry).not_to be_valid
-      expect(entry.errors['base']).to eq(["The credit and debit amounts are not equal"])
+      expect(entry.errors["base"]).to eq(["The credit and debit amounts are not equal"])
     end
 
     it "should have a polymorphic commercial document associations" do
@@ -88,11 +88,17 @@ module Borutus
 
     context "given a set of accounts" do
       let(:mock_document) { FactoryGirl.create(:asset) }
-      let!(:accounts_receivable) { FactoryGirl.create(:asset, name: "Accounts Receivable") }
-      let!(:sales_revenue) { FactoryGirl.create(:revenue, name: "Sales Revenue") }
-      let!(:sales_tax_payable) { FactoryGirl.create(:liability, name: "Sales Tax Payable") }
+      let!(:accounts_receivable) do
+        FactoryGirl.create(:asset, name: "Accounts Receivable")
+      end
+      let!(:sales_revenue) do
+        FactoryGirl.create(:revenue, name: "Sales Revenue") 
+      end
+      let!(:sales_tax_payable) do 
+        FactoryGirl.create(:liability, name: "Sales Tax Payable")
+      end
 
-      shared_examples_for 'a built-from-hash Borutus::Entry' do
+      shared_examples_for "a built-from-hash Borutus::Entry" do
         its(:credit_amounts) { is_expected.not_to be_empty }
         its(:debit_amounts) { is_expected.not_to be_empty }
         it { is_expected.to be_valid }
@@ -118,31 +124,31 @@ module Borutus
         context "when given a credit/debits hash with :account => Account" do
           let(:hash) {
             {
-                description: "Sold some widgets",
-                commercial_document: mock_document,
-                debits: [{account: accounts_receivable, amount: 50}],
-                credits: [
-                    {account: sales_revenue, amount: 45},
-                    {account: sales_tax_payable, amount: 5}
-                ]
+              description: "Sold some widgets",
+              commercial_document: mock_document,
+              debits: [{ account: accounts_receivable, amount: 50 }],
+              credits: [
+                { account: sales_revenue, amount: 45 },
+                { account: sales_tax_payable, amount: 5 },
+              ],
             }
           }
-          include_examples 'a built-from-hash Borutus::Entry'
+          include_examples "a built-from-hash Borutus::Entry"
         end
 
         context "when given a credit/debits hash with :account_name => String" do
           let(:hash) {
             {
-                description: "Sold some widgets",
-                commercial_document: mock_document,
-                debits: [{account_name: accounts_receivable.name, amount: 50}],
-                credits: [
-                    {account_name: sales_revenue.name, amount: 45},
-                    {account_name: sales_tax_payable.name, amount: 5}
-                ]
+              description: "Sold some widgets",
+              commercial_document: mock_document,
+              debits: [{ account_name: accounts_receivable.name, amount: 50 }],
+              credits: [
+                { account_name: sales_revenue.name, amount: 45 },
+                { account_name: sales_tax_payable.name, amount: 5 },
+              ],
             }
           }
-          include_examples 'a built-from-hash Borutus::Entry'
+          include_examples "a built-from-hash Borutus::Entry"
         end
       end
 
@@ -154,7 +160,7 @@ module Borutus
         after { ::ActiveSupport::Deprecation.silenced = false }
 
         context "when used at all" do
-          let(:hash) { Hash.new }
+          let(:hash) { {} }
 
           it("should be deprecated") {
             # .build is the only thing deprecated
@@ -162,9 +168,7 @@ module Borutus
             entry
           }
         end
-
       end
     end
-
   end
 end
