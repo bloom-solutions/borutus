@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency("jquery-ui-rails", ">= 4.2.2")
   s.add_dependency("kaminari", "~> 1.0")
 
-  s.add_development_dependency("yard")
+  s.add_development_dependency "yard"
   s.add_development_dependency "shoulda-matchers"
 
   if s.respond_to? :specification_version then
