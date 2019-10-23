@@ -5,6 +5,7 @@ gemspec
 
 group :development, :test do
   gem "activerecord-jdbcsqlite3-adapter", require: "jdbc-sqlite3", platform: :jruby
+  gem "bloom_rubocop", "0.2.0"
   gem "coveralls", require: false
   gem "factory_girl_rails", "~> 1.1"
   gem "jdbc-sqlite3", platform: :jruby
