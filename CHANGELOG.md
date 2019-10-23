@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Usage of `BigDecimal.new` to `BigDecimal()`
+- Change usage of `BigDecimal.new` to `BigDecimal()`
+- Change `FactoryGirl` to `FactoryBot`
 
 ## [0.2.1] - 2019-01-04
 ### Added
