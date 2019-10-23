@@ -23,7 +23,7 @@ Dir[
   require f
 end
 
-require 'factory_girl'
+require 'factory_bot'
 
 borutus_definitions = File.expand_path(
   File.join(File.dirname(__FILE__), 'factories')
