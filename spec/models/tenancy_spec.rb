@@ -10,7 +10,7 @@ module Borutus
         Borutus.enable_tenancy = true
         Borutus.tenant_class = 'Borutus::Entry'
 
-        FactoryGirlHelpers.reload()
+        FactoryBotHelpers.reload()
         Borutus::Asset.new
       end
 
@@ -23,21 +23,21 @@ module Borutus
         Borutus.enable_tenancy = false
         Borutus.tenant_class = nil
 
-        FactoryGirlHelpers.reload()
+        FactoryBotHelpers.reload()
       end
 
       it 'validate uniqueness of name scoped to tenant' do
-        account = FactoryGirl.create(:asset, tenant_id: 10)
+        account = FactoryBot.create(:asset, tenant_id: 10)
 
-        record = FactoryGirl.build(:asset, name: account.name, tenant_id: 10)
+        record = FactoryBot.build(:asset, name: account.name, tenant_id: 10)
         expect(record).not_to be_valid
         expect(record.errors[:name]).to eq(['has already been taken'])
       end
 
       it 'allows same name scoped under a different tenant' do
-        account = FactoryGirl.create(:asset, tenant_id: 10)
+        account = FactoryBot.create(:asset, tenant_id: 10)
 
-        record = FactoryGirl.build(:asset, name: account.name, tenant_id: 11)
+        record = FactoryBot.build(:asset, name: account.name, tenant_id: 11)
         expect(record).to be_valid
       end
     end

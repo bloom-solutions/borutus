@@ -1,11 +1,14 @@
-FactoryGirl.define do
-  factory :entry, :class => Borutus::Entry do |entry|
-    entry.description 'factory description'
-    factory :entry_with_credit_and_debit, :class => Borutus::Entry do |entry_cd|
-      entry_cd.after_build do |t|
-        t.credit_amounts << FactoryGirl.build(:credit_amount, :entry => t)
-        t.debit_amounts << FactoryGirl.build(:debit_amount, :entry => t)
-      end
+FactoryBot.define do
+  factory :entry, class: Borutus::Entry do
+    description { "factory description" }
+  end
+
+  factory :entry_with_credit_and_debit, class: Borutus::Entry do
+    description { "factory description" }
+    
+    after(:build) do |entry|
+      entry.credit_amounts << FactoryBot.build(:credit_amount, entry: entry)
+      entry.debit_amounts << FactoryBot.build(:debit_amount, entry: entry)
     end
   end
 end

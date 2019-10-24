@@ -1,38 +1,40 @@
-require 'coveralls'
+require "coveralls"
 Coveralls.wear!
 
-require 'pry'
+require "pry"
 
-ENV["RAILS_ENV"] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 
-require File.expand_path(File.dirname(__FILE__) + "/../fixture_rails_root/config/environment")
-require Rails.root.join('db/schema').to_s
+require File.expand_path(
+  File.dirname(__FILE__) + "/../fixture_rails_root/config/environment",
+)
+require Rails.root.join("db/schema").to_s
 
-require 'rspec/rails'
+require "rspec/rails"
 
-$: << File.expand_path(File.dirname(__FILE__) + '/../lib/')
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__) + "/../lib/")
 
-require 'borutus'
-require 'kaminari'
+require "borutus"
+require "kaminari"
 
 Dir[
   File.expand_path(
-    File.join(File.dirname(__FILE__), 'support', '**', '*.rb')
+    File.join(File.dirname(__FILE__), "support", "**", "*.rb"),
   )
 ].each do |f|
   require f
 end
 
-require 'factory_girl'
+require "factory_bot"
 
 borutus_definitions = File.expand_path(
-  File.join(File.dirname(__FILE__), 'factories')
+  File.join(File.dirname(__FILE__), "factories"),
 )
-FactoryGirl.definition_file_paths << borutus_definitions
+FactoryBot.definition_file_paths << borutus_definitions
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 end
 
-FactoryGirlHelpers.reload()
+FactoryBotHelpers.reload
