@@ -217,9 +217,9 @@ module Borutus
         )
         purchase.save
 
-        expect(equity.amounts.size).to eq 1
-        expect(asset.amounts.size).to eq 2
-        expect(expense.amounts.size).to eq 1
+        expect(equity.reload.amounts.size).to eq 1
+        expect(asset.reload.amounts.size).to eq 2
+        expect(expense.reload.amounts.size).to eq 1
       end
     end
 

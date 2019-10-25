@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191025100256) do
+ActiveRecord::Schema.define(version: 20191025154756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20191025100256) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "tenant_id"
-    t.integer "borutus_amounts_count"
+    t.integer "amounts_count"
     t.index ["name", "type"], name: "index_borutus_accounts_on_name_and_type"
   end
 

@@ -72,7 +72,7 @@ module Borutus
     validates_presence_of :type
 
     scope :with_amounts, -> do
-      where("borutus_amounts_count > 0")
+      where("amounts_count > 0")
     end
 
     def self.types
