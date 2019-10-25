@@ -2,6 +2,7 @@ require "spec_helper"
 
 module Borutus
   describe Account do
+
     let(:account) { FactoryBot.build(:account) }
     subject { account }
 
@@ -81,6 +82,50 @@ module Borutus
         expect(payable_entries.second.change_amount).to eq -5
         expect(payable_entries.last.balance).to eq -15 # deduct 15 due to entry_3
         expect(payable_entries.last.change_amount).to eq -15
+      end
+    end
+
+    describe ".with_amounts" do
+      let(:mock_document) { FactoryBot.create(:asset) }
+      let!(:cash) do
+        FactoryBot.create(:asset, name: "Cash")
+      end
+      let!(:accounts_receivable) do
+        FactoryBot.create(:asset, name: "Accounts Receivable")
+      end
+      let!(:sales_revenue) do
+        FactoryBot.create(:revenue, name: "Sales Revenue")
+      end
+      let!(:sales_tax_payable) do
+        FactoryBot.create(:liability, name: "Sales Tax Payable")
+      end
+      let!(:entry_1) do
+        Borutus::Entry.new({
+          description: "Sold some widgets",
+          commercial_document: mock_document,
+          debits: [{ account: accounts_receivable, amount: 50 }],
+          credits: [
+            { account: sales_revenue, amount: 45 },
+            { account: sales_tax_payable, amount: 5 },
+          ],
+        })
+      end
+
+      it "only returns with borutus_amounts_count > 0" do
+        entry_1.save
+
+        accounts = Borutus::Account.with_amounts
+        expect(accounts.count).to eq 3
+
+        account_names = accounts.pluck(:name)
+
+        [
+          "Accounts Receivable",
+          "Sales Revenue",
+          "Sales Tax Payable",
+        ].each do |account_name|
+          expect(account_names).to include account_name
+        end
       end
     end
 
@@ -205,5 +250,6 @@ module Borutus
         expect(expense.entries.size).to eq 1
       end
     end
+
   end
 end

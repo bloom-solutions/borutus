@@ -71,6 +71,10 @@ module Borutus
 
     validates_presence_of :type
 
+    scope :with_amounts, -> do
+      where("borutus_amounts_count > 0")
+    end
+
     def self.types
       [
         ::Borutus::Asset,
@@ -113,13 +117,13 @@ module Borutus
     # @return [BigDecimal] The decimal value balance
     def balance(options = {})
       if self.class == Borutus::Account
-        raise(NoMethodError, "undefined method 'balance'")
+        raise NoMethodError, "undefined method 'balance'"
+      end
+
+      if normal_credit_balance ^ contra
+        credits_balance(options) - debits_balance(options)
       else
-        if normal_credit_balance ^ contra
-          credits_balance(options) - debits_balance(options)
-        else
-          debits_balance(options) - credits_balance(options)
-        end
+        debits_balance(options) - credits_balance(options)
       end
     end
 
@@ -144,11 +148,12 @@ module Borutus
 
     # The debit balance for the account.
     #
-    # Takes an optional hash specifying :from_date and :to_date for calculating balances during periods.
-    # :from_date and :to_date may be strings of the form "yyyy-mm-dd" or Ruby Date objects
+    # Takes an optional hash specifying :from_date and :to_date for calculating
+    # balances during periods. :from_date and :to_date may be strings of the
+    # form "yyyy-mm-dd" or Ruby Date objects
     #
     # @example
-    #   >> asset.debits_balance({:from_date => "2000-01-01", :to_date => Date.today})
+    #   >> asset.debits_balance({ from_date: "2000-01-01", to_date: Date.today})
     #   => #<BigDecimal:103259bb8,'0.1E4',4(12)>
     #
     # @example
@@ -165,11 +170,12 @@ module Borutus
     #
     # Contra accounts are automatically subtracted from the balance.
     #
-    # Takes an optional hash specifying :from_date and :to_date for calculating balances during periods.
-    # :from_date and :to_date may be strings of the form "yyyy-mm-dd" or Ruby Date objects
+    # Takes an optional hash specifying :from_date and :to_date for
+    # calculating balances during periods. :from_date and :to_date may be
+    # strings of the form "yyyy-mm-dd" or Ruby Date objects
     #
     # @example
-    #   >> Borutus::Liability.balance({:from_date => "2000-01-01", :to_date => Date.today})
+    #   >> Borutus::Liability.balance({from_date: "2000-01-01", to_date: Date.today})
     #   => #<BigDecimal:103259bb8,'0.1E4',4(12)>
     #
     # @example
@@ -180,18 +186,18 @@ module Borutus
     def self.balance(options = {})
       if new.class == Borutus::Account
         raise(NoMethodError, "undefined method 'balance'")
-      else
-        accounts_balance = BigDecimal("0")
-        accounts = all
-        accounts.each do |account|
-          if account.contra
-            accounts_balance -= account.balance(options)
-          else
-            accounts_balance += account.balance(options)
-          end
-        end
-        accounts_balance
       end
+
+      accounts_balance = BigDecimal("0")
+      accounts = all
+      accounts.each do |account|
+        if account.contra
+          accounts_balance -= account.balance(options)
+        else
+          accounts_balance += account.balance(options)
+        end
+      end
+      accounts_balance
     end
 
     # The trial balance of all accounts in the system. This should always
@@ -203,16 +209,16 @@ module Borutus
     #
     # @return [BigDecimal] The decimal value balance of all accounts
     def self.trial_balance
-      if new.class == Borutus::Account
-        Borutus::Asset.balance - (
-          Borutus::Liability.balance +
-          Borutus::Equity.balance +
-          Borutus::Revenue.balance -
-          Borutus::Expense.balance
-        )
-      else
-        raise(NoMethodError, "undefined method 'trial_balance'")
+      if new.class != Borutus::Account
+        raise NoMethodError, "undefined method 'trial_balance'"
       end
+
+      Borutus::Asset.balance - (
+        Borutus::Liability.balance +
+        Borutus::Equity.balance +
+        Borutus::Revenue.balance -
+        Borutus::Expense.balance
+      )
     end
 
   end
