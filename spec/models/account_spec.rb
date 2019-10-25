@@ -1,16 +1,16 @@
-require 'spec_helper'
+require "spec_helper"
 
 module Borutus
   describe Account do
     let(:account) { FactoryBot.build(:account) }
     subject { account }
 
-    it { is_expected.not_to be_valid }  # must construct a child type instead
+    it { is_expected.not_to be_valid } # must construct a child type instead
 
     describe ".types" do
       it "lists the available types" do
-        expect(described_class.types).
-          to match_array([Asset, Equity, Expense, Liability, Revenue])
+        expect(described_class.types)
+          .to match_array([Asset, Equity, Expense, Liability, Revenue])
       end
     end
 
@@ -29,11 +29,11 @@ module Borutus
         Borutus::Entry.new({
           description: "Sold some widgets",
           commercial_document: mock_document,
-          debits: [{account: accounts_receivable, amount: 50}],
+          debits: [{ account: accounts_receivable, amount: 50 }],
           credits: [
-            {account: sales_revenue, amount: 45},
-            {account: sales_tax_payable, amount: 5}
-          ]
+            { account: sales_revenue, amount: 45 },
+            { account: sales_tax_payable, amount: 5 },
+          ],
         })
       end
       let!(:entry_2) do
@@ -41,20 +41,20 @@ module Borutus
           description: "Cancel Accounts receivable some widgets again",
           commercial_document: mock_document,
           debits: [
-            {account: accounts_receivable, amount: -30},
+            { account: accounts_receivable, amount: -30 },
           ],
           credits: [
-            {account: sales_revenue, amount: -25},
-            {account: sales_tax_payable, amount: -5},
-          ]
+            { account: sales_revenue, amount: -25 },
+            { account: sales_tax_payable, amount: -5 },
+          ],
         })
       end
       let!(:entry_3) do
         Borutus::Entry.new({
           description: "Cancel Accounts receivable",
           commercial_document: mock_document,
-          debits: [{account: sales_tax_payable, amount: 15}],
-          credits: [{account: accounts_receivable, amount: 15}],
+          debits: [{ account: sales_tax_payable, amount: 15 }],
+          credits: [{ account: accounts_receivable, amount: 15 }],
         })
       end
 
@@ -117,33 +117,33 @@ module Borutus
           liability = FactoryBot.create(:liability)
           equity = FactoryBot.create(:equity)
           revenue = FactoryBot.create(:revenue)
-          contra_asset = FactoryBot.create(:asset, :contra => true)
-          contra_expense = FactoryBot.create(:expense, :contra => true)
+          contra_asset = FactoryBot.create(:asset, contra: true)
+          contra_expense = FactoryBot.create(:expense, contra: true)
           # credit amounts
-          ca1 = FactoryBot.build(:credit_amount, :account => liability, :amount => 100000)
-          ca2 = FactoryBot.build(:credit_amount, :account => equity, :amount => 1000)
-          ca3 = FactoryBot.build(:credit_amount, :account => revenue, :amount => 40404)
-          ca4 = FactoryBot.build(:credit_amount, :account => contra_asset, :amount => 2)
-          ca5 = FactoryBot.build(:credit_amount, :account => contra_expense, :amount => 333)
+          ca1 = FactoryBot.build(:credit_amount, account: liability, amount: 100_000)
+          ca2 = FactoryBot.build(:credit_amount, account: equity, amount: 1000)
+          ca3 = FactoryBot.build(:credit_amount, account: revenue, amount: 40_404)
+          ca4 = FactoryBot.build(:credit_amount, account: contra_asset, amount: 2)
+          ca5 = FactoryBot.build(:credit_amount, account: contra_expense, amount: 333)
 
           # debit accounts
           asset = FactoryBot.create(:asset)
           expense = FactoryBot.create(:expense)
-          contra_liability = FactoryBot.create(:liability, :contra => true)
-          contra_equity = FactoryBot.create(:equity, :contra => true)
-          contra_revenue = FactoryBot.create(:revenue, :contra => true)
+          contra_liability = FactoryBot.create(:liability, contra: true)
+          contra_equity = FactoryBot.create(:equity, contra: true)
+          contra_revenue = FactoryBot.create(:revenue, contra: true)
           # debit amounts
-          da1 = FactoryBot.build(:debit_amount, :account => asset, :amount => 100000)
-          da2 = FactoryBot.build(:debit_amount, :account => expense, :amount => 1000)
-          da3 = FactoryBot.build(:debit_amount, :account => contra_liability, :amount => 40404)
-          da4 = FactoryBot.build(:debit_amount, :account => contra_equity, :amount => 2)
-          da5 = FactoryBot.build(:debit_amount, :account => contra_revenue, :amount => 333)
+          da1 = FactoryBot.build(:debit_amount, account: asset, amount: 100_000)
+          da2 = FactoryBot.build(:debit_amount, account: expense, amount: 1000)
+          da3 = FactoryBot.build(:debit_amount, account: contra_liability, amount: 40_404)
+          da4 = FactoryBot.build(:debit_amount, account: contra_equity, amount: 2)
+          da5 = FactoryBot.build(:debit_amount, account: contra_revenue, amount: 333)
 
-          FactoryBot.create(:entry, :credit_amounts => [ca1], :debit_amounts => [da1])
-          FactoryBot.create(:entry, :credit_amounts => [ca2], :debit_amounts => [da2])
-          FactoryBot.create(:entry, :credit_amounts => [ca3], :debit_amounts => [da3])
-          FactoryBot.create(:entry, :credit_amounts => [ca4], :debit_amounts => [da4])
-          FactoryBot.create(:entry, :credit_amounts => [ca5], :debit_amounts => [da5])
+          FactoryBot.create(:entry, credit_amounts: [ca1], debit_amounts: [da1])
+          FactoryBot.create(:entry, credit_amounts: [ca2], debit_amounts: [da2])
+          FactoryBot.create(:entry, credit_amounts: [ca3], debit_amounts: [da3])
+          FactoryBot.create(:entry, credit_amounts: [ca4], debit_amounts: [da4])
+          FactoryBot.create(:entry, credit_amounts: [ca5], debit_amounts: [da5])
         }
 
         it { is_expected.to eq(0) }
@@ -205,6 +205,5 @@ module Borutus
         expect(expense.entries.size).to eq 1
       end
     end
-
   end
 end
