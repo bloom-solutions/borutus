@@ -10,19 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709082453) do
+ActiveRecord::Schema.define(version: 20191025100256) do
 
-  create_table "borutus_accounts", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "borutus_accounts", id: :serial, force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.boolean "contra"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "tenant_id"
+    t.integer "borutus_amounts_count"
     t.index ["name", "type"], name: "index_borutus_accounts_on_name_and_type"
   end
 
-  create_table "borutus_amounts", force: :cascade do |t|
+  create_table "borutus_amounts", id: :serial, force: :cascade do |t|
     t.string "type"
     t.integer "account_id"
     t.integer "entry_id"
@@ -32,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180709082453) do
     t.index ["type"], name: "index_borutus_amounts_on_type"
   end
 
-  create_table "borutus_entries", force: :cascade do |t|
+  create_table "borutus_entries", id: :serial, force: :cascade do |t|
     t.string "description"
     t.date "date"
     t.integer "commercial_document_id"
