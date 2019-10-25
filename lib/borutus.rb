@@ -1,5 +1,6 @@
 # Borutus
 require "rails"
+require "light-service"
 
 module Borutus
   # ------------------------------ tenancy ------------------------------
