@@ -12,7 +12,7 @@ module Borutus
     belongs_to :entry, class_name: "Borutus::Entry"
     belongs_to(:account, {
       class_name: "Borutus::Account",
-      counter_cache: :borutus_amounts_count,
+      counter_cache: true,
     })
 
     validates_presence_of :type, :amount, :entry, :account
