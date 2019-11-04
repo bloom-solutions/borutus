@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Use unambiguous `Account#with_amounts` scope
 
+## [0.2.4] - 2019-10-31
+### Removed
+- Remove `AddBorutusAmountCounterCache` reset counter code
+
 ## [0.2.3] - 2019-10-25
 ### Fixed
 - Fix `AddBorutusAmountCounterCache` migration
