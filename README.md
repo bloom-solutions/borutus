@@ -265,7 +265,7 @@ entry = Borutus::Entry.build(
 Multitenancy Support
 =====================
 
-Borutus supports multitenant applications. Multitenancy is acheived by associating all Accounts under `Borutus::Account` with a "Tenant" object (typically some model in your Rails application). To add multi-tenancy support to Borutus, you must do the following:
+Borutus supports multitenant applications. Multitenancy is achieved by associating all Accounts under `Borutus::Account` with a "Tenant" object (typically some model in your Rails application). To add multi-tenancy support to Borutus, you must do the following:
 
 - Generate the migration which will add `tenant_id` to the borutus accounts table
 
