@@ -85,7 +85,9 @@ module Borutus
       ]
     end
 
-    if Borutus.enable_tenancy
+    if Borutus.enable_marketplace
+      include Borutus::Marketplace
+    elsif Borutus.enable_tenancy
       include Borutus::Tenancy
     else
       include Borutus::NoTenancy

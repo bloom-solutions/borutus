@@ -302,6 +302,52 @@ entry = Borutus::Entry.new(
 )
 ```
 
+Marketplace Support
+=====================
+
+Borutus supports marketplace applications. This is achieved by associating all Accounts under `Borutus::Account` with a "Seller" object (typically some model in your Rails application). To add marketplace support to Borutus, you must do the following:
+
+- [Enable Multitenancy Support](#multitenancy-support)
+
+
+- Generate the migration which will add `seller_id` to the borutus accounts table
+
+```sh
+bundle exec rails g borutus:marketplace
+```
+
+- Run the migration
+
+```sh
+rake db:migrate
+```
+
+- Update the initializer, i.e. `config/initializers/borutus.rb`
+
+```ruby
+Borutus.config do |config|
+  config.enable_tenancy = true
+  config.tenant_class = 'Tenant'
+  
+  config.enable_marketplace = true
+  config.seller_class = 'Seller'
+end
+```
+
+*NOTE: When building entries, be sure to specify the account directly, rather than use the `account_name` feature. Otherwise you'll probably end up with the wrong account.*
+
+
+```ruby
+debit_account = Borutus::Account.where(name: "Cash", tenant: my_tenant, seller: my_seller).last
+credit_account = Borutus::Account.where(name: "Unearned Revenue", tenant: my_tenant, seller: my_seller).last
+entry = Borutus::Entry.new(
+  description:  "Order placed for widgets",
+  date:  Date.yesterday,
+  debits: [{ account: debit_account, amount: 100.00}],
+  credits: [{ account: credit_account, amount: 100.00}]
+)
+```
+
 Reporting Views
 ===============
 
