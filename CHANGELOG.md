@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Use unambiguous `Account#with_amounts` scope
+- Remove precision/scale to avoid `PG::NumericValueOutOfRange` exception due to precision/scale not being large enough
 
 ## [0.2.4] - 2019-10-31
 ### Removed
