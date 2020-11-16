@@ -87,19 +87,20 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (2.1.0)
-    kaminari (1.1.1)
+    kaminari (1.2.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.1.1)
-      kaminari-activerecord (= 1.1.1)
-      kaminari-core (= 1.1.1)
-    kaminari-actionview (1.1.1)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
       actionview
-      kaminari-core (= 1.1.1)
-    kaminari-activerecord (1.1.1)
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
       activerecord
-      kaminari-core (= 1.1.1)
-    kaminari-core (1.1.1)
-    light-service (0.12.0)
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
+    light-service (0.15.0)
+      activesupport (>= 3.0.0)
     loofah (2.3.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -112,7 +113,7 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
-    nio4r (2.5.2)
+    nio4r (2.5.4)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     parallel (1.18.0)
@@ -200,7 +201,7 @@ GEM
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.2.1)
+    sprockets-rails (3.2.2)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
@@ -215,7 +216,7 @@ GEM
     unicode-display_width (1.6.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     yard (0.9.20)
 
 PLATFORMS
@@ -239,4 +240,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.17.2
+   1.17.3
