@@ -5,6 +5,8 @@ Borutus
 Borutus is based on the `bloom_changes` branch of [bloom-solutions/plutus](https://github.com/bloom-solutions/plutus), which is a fork of
 [mbulat/plutus](https://github.com/mbulat/plutus).
 
+**Please submit pull requests to plutus instead**; we created this to manage changes required by our apps.
+
 The Borutus plugin is a Ruby on Rails Engine which provides a double entry accounting system for your application.
 
 Compatibility
