@@ -12,7 +12,7 @@ module Borutus
     #   GET /reports/balance_sheet
     def balance_sheet
       first_entry = Borutus::Entry.order('date ASC').first
-      @from_date = first_entry ? first_entry.date: Date.today
+      @from_date = first_entry ? first_entry.date.to_date: Date.today
       @to_date = params[:date] ? Date.parse(params[:date]) : Date.today
       @assets = Borutus::Asset.all
       @liabilities = Borutus::Liability.all
